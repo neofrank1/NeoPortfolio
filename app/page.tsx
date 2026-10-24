@@ -1,70 +1,237 @@
-import Image from "next/image";
-import { Button } from '@heroui/react';
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Code2,
+  Database,
+  GraduationCap,
+  Mail,
+  Moon,
+  Server,
+  Sun,
+  Wrench,
+} from "lucide-react";
+import type { SimpleIcon } from "simple-icons";
+import {
+  siDocker,
+  siGit,
+  siGithub,
+  siHeroui,
+  siJavascript,
+  siLaravel,
+  siLinux,
+  siMysql,
+  siNextdotjs,
+  siNodedotjs,
+  siPhp,
+  siPostgresql,
+  siPrisma,
+  siReact,
+  siTailwindcss,
+  siTypescript,
+  siVite,
+} from "simple-icons/icons";
+
+type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  status: string;
+  visual: string;
+  githubUrl?: string;
+  demoUrl?: string;
+};
+
+const projects: Project[] = [
+  {
+    title: "Inventory & Sales Management System",
+    description: "A system for managing products, monitoring inventory, tracking sales, and generating reports.",
+    tags: ["Laravel", "React", "TypeScript", "MySQL"],
+    status: "In progress",
+    visual: "inventory",
+  },
+  {
+    title: "Movie Review Platform",
+    description: "A movie platform with reviews, ratings, likes, and user authentication.",
+    tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
+    status: "Live platform",
+    visual: "movies",
+    demoUrl: "https://movie-react-steel-phi.vercel.app",
+  },
+  {
+    title: "Academic Scheduling System",
+    description: "An academic scheduling application designed to organize classes, rooms, instructors, and time slots.",
+    tags: ["Laravel", "PHP", "MySQL", "JavaScript"],
+    status: "Not live",
+    visual: "schedule",
+  },
+  {
+    title: "NativeCamp",
+    description: "A global online English and language learning platform with 24/7 on-demand, unlimited lessons, primarily serving students in Japan and Taiwan.",
+    tags: ["ESL", "Online Learning", "Language Learning"],
+    status: "Live platform",
+    visual: "online-class",
+    demoUrl: "https://nativecamp.net/",
+  },
+];
+
+const stacks = [
+  { icon: Code2, name: "Frontend", tags: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "HeroUI"] },
+  { icon: Server, name: "Backend", tags: ["PHP", "Laravel", "Node.js", "REST APIs"] },
+  { icon: Database, name: "Database", tags: ["PostgreSQL", "MySQL", "Prisma", "SQL"] },
+  { icon: Wrench, name: "Tools", tags: ["Git", "GitHub", "Docker", "Linux", "Vite"] },
+];
+
+const technologyIcons: Record<string, SimpleIcon> = {
+  React: siReact,
+  "Next.js": siNextdotjs,
+  TypeScript: siTypescript,
+  JavaScript: siJavascript,
+  "Tailwind CSS": siTailwindcss,
+  HeroUI: siHeroui,
+  PHP: siPhp,
+  Laravel: siLaravel,
+  "Node.js": siNodedotjs,
+  PostgreSQL: siPostgresql,
+  MySQL: siMysql,
+  Prisma: siPrisma,
+  Git: siGit,
+  GitHub: siGithub,
+  Docker: siDocker,
+  Linux: siLinux,
+  Vite: siVite,
+};
+
+function BrandIcon({ icon, className = "brand-icon" }: { icon: SimpleIcon; className?: string }) {
+  return <svg className={className} viewBox="0 0 24 24" aria-hidden="true"><path d={icon.path} /></svg>;
+}
+
+function ProjectPreview({ type }: { type: string }) {
+  return (
+    <div className={`project-preview preview-${type}`} aria-hidden="true">
+      {type === "movies" ? (
+        <div className="movie-screen">
+          <div className="mock-top"><b>MovieFlix</b><i>Browse titles</i></div>
+          <div className="poster-row">{[1, 2, 3, 4, 5].map((poster) => <span className={`poster poster-${poster}`} key={poster} />)}</div>
+        </div>
+      ) : (
+        <div className="mock-app">
+          <aside className="mock-sidebar"><i /><i /><i /><i /><i /></aside>
+          <div className="mock-content">
+            <div className="mock-top"><b>{type === "inventory" ? "Inventory Overview" : type === "online-class" ? "Online English Class" : "Class Scheduling"}</b><i>{type === "online-class" ? "＋ Join lesson" : "＋ New item"}</i></div>
+            <div className="mock-stats"><span /><span /><span /></div>
+            <div className="mock-table"><span /><span /><span /><span /></div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Home() {
+  const [light, setLight] = useState(false);
+
+  useEffect(() => {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".nav-links a"));
+    const sections = links.map((link) => document.querySelector(link.hash)).filter((section): section is Element => Boolean(section));
+    const handleNavClick = (event: MouseEvent) => {
+      const link = event.currentTarget as HTMLAnchorElement;
+      links.forEach((navLink) => navLink.classList.toggle("active", navLink === link));
+    };
+    links.forEach((link) => link.addEventListener("click", handleNavClick));
+    const observer = new IntersectionObserver((entries) => {
+      const visibleSections = entries.filter((entry) => entry.isIntersecting).map((entry) => entry.target);
+      if (!visibleSections.length) return;
+
+      const clickedSection = links.find((link) => link.hash === window.location.hash)?.hash;
+      const activeSection = visibleSections.find((section) => `#${section.id}` === clickedSection) ?? visibleSections[0];
+      links.forEach((link) => link.classList.toggle("active", link.hash === `#${activeSection.id}`));
+    }, { rootMargin: "-25% 0px -65% 0px" });
+    sections.forEach((section) => observer.observe(section));
+    return () => {
+      observer.disconnect();
+      links.forEach((link) => link.removeEventListener("click", handleNavClick));
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className={light ? "portfolio light" : "portfolio"}>
+      <header className="site-header">
+        <nav className="nav wrap" aria-label="Main navigation">
+          <a className="brand" href="#home"><span>~/</span>neo<span>.dev</span></a>
+          <div className="nav-links">
+            <a className="active" href="#home">home</a><a href="#projects">projects</a><a href="#stack">tech_stack</a>
+            <a href="#experience">experience</a><a href="#contact">contact</a>
+          </div>
+          <button className="theme-toggle" aria-label="Toggle color theme" onClick={() => setLight(!light)}>{light ? <Sun size={20} /> : <Moon size={20} />}</button>
+        </nav>
+      </header>
+
+      <main>
+        <section className="hero" id="home">
+          <div className="wrap hero-inner">
+            <div className="hero-copy">
+              <div className="availability"><i className="dot" />open_to_work = true</div>
+              <h1>Hi, I’m <span>Neo Frank D. Uy</span><b className="cursor" aria-hidden="true" /></h1>
+              <h2><span className="prompt-mark">&gt;</span> Full-Stack Developer</h2>
+              <p className="intro">I build web applications focused on usability, maintainability, and solving real-world problems. My work spans backend development, database design, and modern frontend interfaces.</p>
+              <div className="actions"><a className="btn btn-primary" href="#projects">Explore Projects <ArrowRight size={17} /></a><a className="btn btn-ghost" href="#experience">View Resume <ArrowDown size={16} /></a></div>
+              <div className="socials"><a href="https://github.com/neofrank1" aria-label="GitHub" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub} /></a><a href="https://www.linkedin.com/in/neo-frank-uy/" aria-label="LinkedIn" target="_blank" rel="noreferrer"><span className="linkedin-mark">in</span></a><a href="mailto:hello@example.com" aria-label="Email"><Mail size={20} /></a></div>
+            </div>
+            <div className="hero-art" aria-hidden="true">
+              <div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit orbit-three" />
+              <div className="hero-glow" />
+              <div className="float-card card-frontend"><span className="icon"><Code2 size={20} /></span><span><b>Frontend</b><small>React / Next.js / TS</small></span></div>
+              <div className="float-card card-backend"><span className="icon"><Server size={20} /></span><span><b>Backend</b><small>Laravel / Node.js</small></span></div>
+              <div className="float-card card-building"><span className="icon"><BriefcaseBusiness size={19} /></span><span><b>Building</b><small>Full-stack apps</small></span></div>
+              <span className="orbit-point point-one" /><span className="orbit-point point-two" />
+            </div>
+          </div>
+        </section>
+
+        <section id="projects"><div className="wrap section">
+          <div className="section-head"><div><p className="eyebrow">// SELECTED_PROJECTS</p><h2>Projects I’ve been building<span className="heading-cursor">_</span></h2><p className="section-sub">A few featured projects that showcase my skills and approach to problem solving.</p></div><a className="text-link" href="https://github.com/neofrank1" target="_blank" rel="noreferrer">view_all_projects <span>→</span></a></div>
+          <div className="projects">{projects.map((project) => <article className="project-card" key={project.title}>
+            <ProjectPreview type={project.visual} /><h3>{project.title}</h3><p>{project.description}</p>
+            <div className="tags">{project.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}</div>
+            <div className="project-foot"><span className={`status ${project.status === "Update status" ? "status-blue" : project.status === "Not live" ? "status-red" : ""}`}><i />{project.status}</span><span className="project-links">{project.githubUrl && <a href={project.githubUrl} aria-label={`${project.title} GitHub repository`} target="_blank" rel="noreferrer"><BrandIcon icon={siGithub} /> Code</a>}{project.demoUrl && <a href={project.demoUrl} aria-label={`${project.title} live website`} target="_blank" rel="noreferrer">Live site <ArrowUpRight size={15} /></a>}</span></div>
+          </article>)}</div>
+        </div></section>
+
+        <section id="stack"><div className="wrap section"><p className="eyebrow">// TECH_STACK</p><h2>My development toolkit<span className="heading-cursor">_</span></h2><p className="section-sub">Technologies I use, grouped by the role they play in building applications.</p>
+          <div className="tech-grid">{stacks.map((stack) => { const CategoryIcon = stack.icon; return <article className="tech-card" key={stack.name}><span className="icon"><CategoryIcon size={21} /></span><h3>{stack.name}</h3><div className="tags">{stack.tags.map((tag) => <span className="tag" key={tag}>{technologyIcons[tag] ? <BrandIcon icon={technologyIcons[tag]} /> : <Code2 size={14} />}<span>{tag}</span></span>)}</div></article>; })}</div>
+        </div></section>
+
+        <section className="journey-section">
+          <div className="wrap journey">
+            <div id="experience"><p className="eyebrow">My Journey</p><h2>Experience &amp; milestones.</h2><p className="section-sub">A timeline of my professional experience, independent work, and growth as a developer.</p>
+              <div className="timeline">
+                <div className="timeline-item"><span className="pill-outline">Full-time</span><div className="timeline-date">Oct 2023 — Present</div><div className="timeline-title">Web Developer</div><div className="timeline-role">Forty Degrees Celsius Inc. · Cebu City</div><p className="timeline-desc">Develop and maintain web applications with CakePHP 2, PHP, JavaScript, and jQuery. Resolved 100+ technical tickets across bug fixes, feature work, and performance improvements. Collaborate with senior developers and architects on code refactoring and database query optimization.</p></div>
+                <div className="timeline-item"><span className="pill-outline">Internship</span><div className="timeline-date">Feb 2023 — Sep 2023</div><div className="timeline-title">Web Developer Intern</div><div className="timeline-role">SugboDoc Technologies Inc. · Cebu City</div><p className="timeline-desc">Developed and maintained company web systems using CodeIgniter 3 and Bootstrap 4. Supported team operations and organized medical coding data across SNOMED, FHIR, ICD-9, and ICD-10 standards.</p></div>
+              </div>
+            </div>
+            <div id="education">
+              <p className="eyebrow">Education</p>
+              <h2>Where I learned and grew.</h2>
+                <div className="education-card">
+                  <span className="icon"><GraduationCap size={21} /></span>
+                  <div>
+                    <small>Aug 2023</small>
+                    <h3>Bachelor of Science in Information Technology</h3>
+                    <p>Cebu Technological University · M.J. Cuenco Ave., Cebu City</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="contact-section"><div className="wrap"><div className="contact-card"><div><p className="eyebrow">Get in touch</p><h2>Have a project or opportunity<br />in mind?</h2><p>I’m interested in connecting with teams and people building useful software. Feel free to reach out.</p></div><div className="contact-actions"><a className="btn btn-primary" href="mailto:hello@example.com"><Mail size={17} /> Contact me</a><a className="text-link" href="https://github.com/neofrank1" target="_blank" rel="noreferrer">GitHub profile <ArrowUpRight size={15} /></a></div></div></div></section>
       </main>
+      <footer className="wrap footer"><div className="footer-left"><a className="brand" href="#home"><span>~/</span>neo<span>.dev</span></a><span>© 2026 Neo Frank D. Uy. All rights reserved.</span></div><a className="back-top" href="#home">back_to_top <ArrowUpRight size={15} /></a></footer>
     </div>
   );
 }
