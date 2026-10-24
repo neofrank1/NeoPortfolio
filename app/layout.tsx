@@ -21,9 +21,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${jetbrainsMono.variable} h-full antialiased`}
     >
-      <SpeedInsights />
-      <Analytics />
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <SpeedInsights />
+        <Analytics />
+      </body>
     </html>
   );
 }
