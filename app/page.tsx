@@ -5,7 +5,6 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  BriefcaseBusiness,
   Code2,
   Database,
   GraduationCap,
@@ -180,21 +179,32 @@ export default function Home() {
               <h2><span className="prompt-mark">&gt;</span> Full-Stack Developer</h2>
               <p className="intro">I build web applications focused on usability, maintainability, and solving real-world problems. My work spans backend development, database design, and modern frontend interfaces.</p>
               <div className="actions"><a className="btn btn-primary" href="#projects">Explore Projects <ArrowRight size={17} /></a><a className="btn btn-ghost" href="#experience">View Resume <ArrowDown size={16} /></a></div>
-              <div className="socials"><a href="https://github.com/neofrank1" aria-label="GitHub" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub} /></a><a href="https://www.linkedin.com/in/neo-frank-uy/" aria-label="LinkedIn" target="_blank" rel="noreferrer"><span className="linkedin-mark">in</span></a><a href="mailto:hello@example.com" aria-label="Email"><Mail size={20} /></a></div>
+              <div className="socials">
+                <a href="https://github.com/neofrank1" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub} /> github</a>
+                <a href="https://www.linkedin.com/in/neo-frank-uy/" target="_blank" rel="noreferrer">
+                  <svg className="brand-icon social-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" /></svg> linkedin
+                </a>
+                <a href="mailto:hello@example.com"><Mail size={18} /> email</a>
+              </div>
             </div>
-            <div className="hero-art" aria-hidden="true">
-              <div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit orbit-three" />
-              <div className="hero-glow" />
-              <div className="float-card card-frontend"><span className="icon"><Code2 size={20} /></span><span><b>Frontend</b><small>React / Next.js / TS</small></span></div>
-              <div className="float-card card-backend"><span className="icon"><Server size={20} /></span><span><b>Backend</b><small>Laravel / Node.js</small></span></div>
-              <div className="float-card card-building"><span className="icon"><BriefcaseBusiness size={19} /></span><span><b>Building</b><small>Full-stack apps</small></span></div>
-              <span className="orbit-point point-one" /><span className="orbit-point point-two" />
+            <div className="hero-terminal" aria-hidden="true">
+              <div className="term-bar"><i className="term-dot term-red" /><i className="term-dot term-yellow" /><i className="term-dot term-green" /><span>profile.ts</span></div>
+              <pre className="term-body"><code>
+                <div><span className="tk-kw">const</span> <span className="tk-var">developer</span> = {"{"}</div>
+                <div className="term-indent">name: <span className="tk-str">{'"Neo Frank D. Uy"'}</span>,</div>
+                <div className="term-indent">role: <span className="tk-str">{'"Full-Stack Developer"'}</span>,</div>
+                <div className="term-indent">frontend: [<span className="tk-str">{'"React"'}</span>, <span className="tk-str">{'"Next.js"'}</span>, <span className="tk-str">{'"TypeScript"'}</span>],</div>
+                <div className="term-indent">backend: [<span className="tk-str">{'"Laravel"'}</span>, <span className="tk-str">{'"Node.js"'}</span>],</div>
+                <div className="term-indent">building: <span className="tk-str">{'"full-stack apps"'}</span>,</div>
+                <div className="term-indent">openToWork: <span className="tk-bool">true</span>,</div>
+                <div>{"};"}</div>
+              </code></pre>
             </div>
           </div>
         </section>
 
         <section id="projects"><div className="wrap section">
-          <div className="section-head"><div><p className="eyebrow">// SELECTED_PROJECTS</p><h2>Projects I’ve been building<span className="heading-cursor">_</span></h2><p className="section-sub">A few featured projects that showcase my skills and approach to problem solving.</p></div><a className="text-link" href="https://github.com/neofrank1" target="_blank" rel="noreferrer">view_all_projects <span>→</span></a></div>
+          <div className="section-head"><div><p className="eyebrow">{"// SELECTED_PROJECTS"}</p><h2>Projects I’ve been building<span className="heading-cursor">_</span></h2><p className="section-sub">A few featured projects that showcase my skills and approach to problem solving.</p></div><a className="text-link" href="https://github.com/neofrank1" target="_blank" rel="noreferrer">view_all_projects <span>→</span></a></div>
           <div className="projects">{projects.map((project) => <article className="project-card" key={project.title}>
             <ProjectPreview type={project.visual} /><h3>{project.title}</h3><p>{project.description}</p>
             <div className="tags">{project.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}</div>
@@ -202,7 +212,7 @@ export default function Home() {
           </article>)}</div>
         </div></section>
 
-        <section id="stack"><div className="wrap section"><p className="eyebrow">// TECH_STACK</p><h2>My development toolkit<span className="heading-cursor">_</span></h2><p className="section-sub">Technologies I use, grouped by the role they play in building applications.</p>
+        <section id="stack"><div className="wrap section"><p className="eyebrow">{"// TECH_STACK"}</p><h2>My development toolkit<span className="heading-cursor">_</span></h2><p className="section-sub">Technologies I use, grouped by the role they play in building applications.</p>
           <div className="tech-grid">{stacks.map((stack) => { const CategoryIcon = stack.icon; return <article className="tech-card" key={stack.name}><span className="icon"><CategoryIcon size={21} /></span><h3>{stack.name}</h3><div className="tags">{stack.tags.map((tag) => <span className="tag" key={tag}>{technologyIcons[tag] ? <BrandIcon icon={technologyIcons[tag]} /> : <Code2 size={14} />}<span>{tag}</span></span>)}</div></article>; })}</div>
         </div></section>
 
