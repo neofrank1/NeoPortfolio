@@ -11,6 +11,8 @@
   "dependencies": {
     "@heroui/react": "^3.2.6",
     "@heroui/styles": "^3.2.6",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "lucide-react": "^1.61.0",
     "next": "16.4.3",
     "react": "19.3.0",
