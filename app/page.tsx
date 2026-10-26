@@ -18,11 +18,10 @@ import {
 import type { SimpleIcon } from "simple-icons";
 import {
   siClaude,
-  siClaudecode,
   siDocker,
   siGit,
   siGithub,
-  siGithubcopilot,
+  siGooglegemini,
   siHeroui,
   siJavascript,
   siLaravel,
@@ -87,7 +86,7 @@ const stacks = [
   { icon: Server, name: "Backend", tags: ["PHP", "Laravel", "Node.js", "REST APIs"] },
   { icon: Database, name: "Database", tags: ["PostgreSQL", "MySQL", "Prisma", "SQL"] },
   { icon: Wrench, name: "Tools", tags: ["Git", "GitHub", "Docker", "Linux", "Vite"] },
-  { icon: Sparkles, name: "AI", tags: ["Claude", "Claude Code", "GitHub Copilot", "Prompt Engineering", "AI Integrations"] },
+  { icon: Sparkles, name: "AI", tags: ["Claude", "Codex", "ChatGPT", "Gemini", "Prompt Engineering"] },
 ];
 
 const technologyIcons: Record<string, SimpleIcon> = {
@@ -109,8 +108,7 @@ const technologyIcons: Record<string, SimpleIcon> = {
   Linux: siLinux,
   Vite: siVite,
   Claude: siClaude,
-  "Claude Code": siClaudecode,
-  "GitHub Copilot": siGithubcopilot,
+  Gemini: siGooglegemini,
 };
 
 function BrandIcon({ icon, className = "brand-icon" }: { icon: SimpleIcon; className?: string }) {
