@@ -11,14 +11,17 @@ import {
   Mail,
   Moon,
   Server,
+  Sparkles,
   Sun,
   Wrench,
 } from "lucide-react";
 import type { SimpleIcon } from "simple-icons";
 import {
+  siClaude,
   siDocker,
   siGit,
   siGithub,
+  siGooglegemini,
   siHeroui,
   siJavascript,
   siLaravel,
@@ -83,6 +86,7 @@ const stacks = [
   { icon: Server, name: "Backend", tags: ["PHP", "Laravel", "Node.js", "REST APIs"] },
   { icon: Database, name: "Database", tags: ["PostgreSQL", "MySQL", "Prisma", "SQL"] },
   { icon: Wrench, name: "Tools", tags: ["Git", "GitHub", "Docker", "Linux", "Vite"] },
+  { icon: Sparkles, name: "AI", tags: ["Claude", "Codex", "ChatGPT", "Gemini", "Prompt Engineering"] },
 ];
 
 const technologyIcons: Record<string, SimpleIcon> = {
@@ -103,6 +107,8 @@ const technologyIcons: Record<string, SimpleIcon> = {
   Docker: siDocker,
   Linux: siLinux,
   Vite: siVite,
+  Claude: siClaude,
+  Gemini: siGooglegemini,
 };
 
 function BrandIcon({ icon, className = "brand-icon" }: { icon: SimpleIcon; className?: string }) {

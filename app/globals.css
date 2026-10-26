@@ -222,3 +222,9 @@ body{font-size:15px}
 .tk-kw{color:#8b94a6}.tk-var{color:var(--green)}.tk-str{color:#f5c26b}.tk-bool{color:var(--purple)}
 @media(max-width:850px){.hero-terminal{justify-self:stretch;max-width:none}}
 @media(max-width:650px){.hero-terminal{margin-top:18px}.term-body{font-size:12px;padding:16px}}
+
+/* Five tech cards: three on the first row, two wider on the second. */
+.tech-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+.tech-grid>.tech-card{grid-column:span 2}
+.tech-grid>.tech-card:nth-child(n+4){grid-column:span 3}
+@media(max-width:850px){.tech-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tech-grid>.tech-card,.tech-grid>.tech-card:nth-child(n+4){grid-column:auto}.tech-grid>.tech-card:last-child{grid-column:1/-1}}
