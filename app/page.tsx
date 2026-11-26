@@ -461,7 +461,12 @@ export default function Home() {
     const message = String(data.get("message") ?? "");
     const subject = encodeURIComponent("Hello from your portfolio");
     const body = encodeURIComponent(`${message}\n\n— ${from}`);
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    // Same approach as the old contact link: a real mailto anchor opens the email app.
+    const mail = document.createElement("a");
+    mail.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    document.body.appendChild(mail);
+    mail.click();
+    mail.remove();
     setContactOpen(false);
     form.reset();
     showToast("Opening your email app…");
